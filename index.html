@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Syla Atelier | Kapsamlı Dijital Büyüme Stratejisi | More Dijital Ajans</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Calm Harmony -->
+    <!-- Application Structure Plan: Bu geliştirilmiş tek sayfalı uygulama (SPA), kullanıcının derinlemesine bir analiz yolculuğuna çıkmasını sağlamak için tasarlanmıştır. Sol taraftaki sabit gezinme menüsü, raporun ana sütunları arasında bir çıpa görevi görürken, sağdaki geniş içerik alanı her bir konuyu (SWOT, Hedef Kitle, Pazar Analizi vb.) detaylı paragraflar, interaktif grafikler ve stratejik çıkarımlarla sunar. Bu yapı, bilginin hem bütünsel olarak algılanmasına hem de her bir bölümün kendi içinde derinlemesine incelenmesine olanak tanır. Tasarım, Syla Atelier'in sofistike ve minimalist marka kimliğine sadık kalarak, profesyonel ve etkileyici bir sunum deneyimi sunmak üzere seçilmiştir. -->
+    <!-- Visualization & Content Choices: 
+        - SWOT Analizi -> Goal: Organize/Analyze -> Viz: Detaylı metin blokları ve stratejik çıkarım kartları -> Interaction: Yok -> Justification: Basit bir listeden öteye geçerek, analizin her bir parçasını yorumlamak ve doğrudan stratejik eylemlere bağlamak.
+        - Hedef Kitle -> Goal: Inform/Empathize -> Viz: Detaylı persona kartları (resim, demografi, motivasyonlar, engeller) ve Radar Grafiği -> Interaction: Yok -> Justification: Hedef kitleyi canlandırarak, onlarla empati kurmayı ve pazarlama mesajlarını daha isabetli hale getirmeyi sağlamak.
+        - Rakip Konumlandırma -> Goal: Compare/Strategize -> Viz: Bubble Chart ve detaylı rakip analiz kartları -> Interaction: Grafik üzerine gelince bilgi görme -> Justification: Pazarın görsel bir haritasını sunmak ve Syla'nın rakiplerinden nasıl ayrışacağını net bir şekilde ortaya koymak.
+        - Bütçe Dağılımı -> Goal: Compare/Inform -> Viz: Özelleştirilmiş tooltip içeren Donut Chart -> Interaction: Fare ile üzerine gelince TL ve yüzde görme -> Justification: Bütçenin stratejik dağılımını şeffaf ve anlaşılır bir şekilde göstermek.
+        - Stratejik Yol Haritası -> Goal: Change (over time) -> Viz: Aşamalı (Faz 1, Faz 2, Faz 3) ve KPI odaklı zaman çizelgesi -> Interaction: Yok -> Justification: Stratejinin uygulanmasını somut, ölçülebilir ve zamana bağlı adımlara bölerek eylem planını netleştirmek.
+        - Library/Method: Chart.js for all charts, custom JS for navigation and tabs.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body { font-family: 'Poppins', sans-serif; background-color: #F8F5F2; color: #3D3D3D; scroll-behavior: smooth; }
+        h1, h2, h3, h4 { font-family: 'Playfair Display', serif; }
+        .main-content-section { min-height: 100vh; padding-top: 5rem; padding-bottom: 5rem; }
+        .nav-link { transition: all 0.3s ease; border-left: 3px solid transparent; }
+        .nav-link.active { border-left-color: #8B7D72; color: #3D3D3D; background-color: #EFEAE6; font-weight: 500; }
+        .nav-link:hover { color: #3D3D3D; background-color: #EFEAE6; }
+        .chart-container { position: relative; width: 100%; max-width: 600px; margin-left: auto; margin-right: auto; height: 350px; max-height: 450px; }
+        @media (min-width: 768px) { .chart-container { height: 400px; } }
+        .tab-button.active { border-bottom-color: #8B7D72; color: #3D3D3D; font-weight: 500; }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="flex">
+        <aside class="w-64 bg-[#EFEAE6] p-6 fixed h-full hidden lg:block shadow-lg z-20">
+            <div class="text-center mb-10">
+                <a href="#giris"><h1 class="text-3xl font-bold text-[#3D3D3D]">Syla</h1><p class="text-sm text-[#8B7D72]">Atelier</p></a>
+            </div>
+            <nav id="desktop-nav" class="space-y-4">
+                 <a href="#giris" class="nav-link block p-3 text-gray-600 font-medium rounded-r-lg">Giriş</a>
+                <a href="#swot-analizi" class="nav-link block p-3 text-gray-600 font-medium rounded-r-lg">SWOT Analizi</a>
+                <a href="#hedef-kitle" class="nav-link block p-3 text-gray-600 font-medium rounded-r-lg">Hedef Kitle</a>
+                <a href="#pazar-analizi" class="nav-link block p-3 text-gray-600 font-medium rounded-r-lg">Pazar Analizi</a>
+                <a href="#dijital-strateji" class="nav-link block p-3 text-gray-600 font-medium rounded-r-lg">Dijital Strateji</a>
+                <a href="#butce-ve-plan" class="nav-link block p-3 text-gray-600 font-medium rounded-r-lg">Bütçe & Yol Haritası</a>
+            </nav>
+            <div class="absolute bottom-6 left-6 right-6 text-center">
+                 <p class="text-xs text-gray-400">More Dijital Ajans &copy; 2025</p>
+            </div>
+        </aside>
+
+        <main class="flex-1 lg:ml-64">
+            <section id="giris" class="main-content-section flex flex-col justify-center items-center text-center p-6 md:p-10 bg-cover bg-center" style="background-image: linear-gradient(rgba(248, 245, 242, 0.8), rgba(248, 245, 242, 1)), url('https://placehold.co/1200x800/e0dcd7/e0dcd7?text=');">
+                 <div class="max-w-4xl">
+                    <p class="text-lg text-[#8B7D72] mb-2">More Dijital Ajans Sunar</p>
+                    <h1 class="text-5xl md:text-7xl font-bold text-[#3D3D3D] mb-4">Syla Atelier</h1>
+                    <h2 class="text-2xl md:text-3xl text-gray-600 mb-8">Kapsamlı Dijital Büyüme Stratejisi</h2>
+                    <p class="text-base md:text-lg text-gray-500 leading-relaxed">
+                        Syla Atelier'in özgün ruhunu ve zarafetini dijital dünyada zirveye taşımak için hazırlanan bu strateji raporu, markanızın hikayesini doğru kitleyle buluşturarak sürdürülebilir bir büyüme sağlamayı hedefler. Pazar analizinden yaratıcı içerik stratejilerine, hedef kitle personasından teknik web sitesi iyileştirmelerine kadar her detayı sizin için planladık.
+                    </p>
+                </div>
+            </section>
+
+            <section id="swot-analizi" class="main-content-section p-6 md:p-10">
+                <div class="max-w-5xl mx-auto">
+                    <h2 class="text-4xl md:text-5xl font-bold text-center mb-4">Stratejik Konumlandırma: SWOT Analizi</h2>
+                    <p class="text-lg text-center text-gray-500 mb-12">
+                        Markanın içsel ve dışsal dinamiklerini derinlemesine inceleyerek stratejimizin temelini oluşturuyoruz. Bu analiz, Syla Atelier'in pazardaki yerini netleştirir ve atılacak adımların yönünü belirler.
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+                        <div class="bg-white/50 p-6 rounded-2xl shadow-sm border-t-4 border-green-400"><h3 class="text-2xl font-semibold mb-3 text-green-700">Güçlü Yönler</h3><ul class="list-disc list-inside space-y-2 text-gray-600"><li><strong>Üstün Kalite:</strong> En kaliteli ipek kumaşların kullanımı, markanın temelini oluşturan bir değer vaadidir.</li><li><strong>Otantik Hikaye:</strong> Kurucunun vizyonu ve Como'dan alınan ilham, markaya derinlik ve duygusal bir bağ katmaktadır.</li><li><strong>Özgün Tasarım:</strong> Modern çizgileri sofistike detaylarla birleştiren zamansız bir estetik anlayışı.</li><li><strong>Net Hedef Kitle:</strong> Güçlü, özgün ve stil sahibi kadınlara hitap ederek pazarda net bir niş oluşturması.</li></ul></div>
+                        <div class="bg-white/50 p-6 rounded-2xl shadow-sm border-t-4 border-red-400"><h3 class="text-2xl font-semibold mb-3 text-red-700">Zayıf Yönler</h3><ul class="list-disc list-inside space-y-2 text-gray-600"><li><strong>Düşük Bilinirlik:</strong> Dijital pazarda henüz yeni olması ve geniş kitlelere ulaşmamış olması.</li><li><strong>Web Sitesi Optimizasyonu:</strong> Mevcut sitenin SEO ve dönüşüm hunisi açısından geliştirilmeye açık olması.</li><li><strong>Sınırlı İçerik:</strong> Sosyal medya ve web sitesinde marka hikayesini destekleyecek zengin içerik eksikliği.</li><li><strong>Uluslararası Erişim:</strong> Henüz yurtdışı pazarlarına yönelik organize bir pazarlama faaliyetinin olmaması.</li></ul></div>
+                        <div class="bg-white/50 p-6 rounded-2xl shadow-sm border-t-4 border-blue-400"><h3 class="text-2xl font-semibold mb-3 text-blue-700">Fırsatlar</h3><ul class="list-disc list-inside space-y-2 text-gray-600"><li><strong>Bilinçli Tüketici:</strong> Sürdürülebilirlik, kalite ve hikayesi olan markalara artan ilgi.</li><li><strong>Avrupa Pazarı:</strong> Özellikle İtalya, Fransa ve İngiltere gibi moda başkentlerinde markanın estetiğine uygun büyük bir potansiyel.</li><li><strong>İçerik Pazarlaması:</strong> Blog, video ve rehberlerle ipek ve lüks moda konusunda bir otorite haline gelme.</li><li><strong>Stratejik İşbirlikleri:</strong> Marka kimliğiyle uyumlu influencer'lar, sanatçılar ve diğer lüks markalarla ortak projeler.</li></ul></div>
+                        <div class="bg-white/50 p-6 rounded-2xl shadow-sm border-t-4 border-yellow-500"><h3 class="text-2xl font-semibold mb-3 text-yellow-700">Tehditler</h3><ul class="list-disc list-inside space-y-2 text-gray-600"><li><strong>Yoğun Rekabet:</strong> Hem global devlerin hem de yerel niş markaların bulunduğu kalabalık bir pazar.</li><li><strong>Ekonomik Belirsizlik:</strong> Lüks tüketim harcamalarının ekonomik dalgalanmalara karşı hassasiyeti.</li><li><strong>Reklam Maliyetleri:</strong> Dijital reklam platformlarında artan rekabet ve maliyetler.</li><li><strong>Trend Baskısı:</strong> Hızla değişen moda akımlarına karşı markanın zamansız kimliğini koruma zorunluluğu.</li></ul></div>
+                    </div>
+                    <h3 class="text-3xl font-bold text-center mb-8">Stratejik Çıkarımlar</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-white/60 p-6 rounded-lg shadow-sm"><h4 class="font-bold text-lg mb-2">Fırsatları Değerlendirme</h4><p class="text-gray-600">Markanın otantik hikayesi ve kalite vurgusu, Avrupa'daki bilinçli tüketiciye yönelik hedeflenmiş içerik ve influencer pazarlaması ile birleştirilerek güçlü bir pazar girişi yapılabilir.</p></div>
+                        <div class="bg-white/60 p-6 rounded-lg shadow-sm"><h4 class="font-bold text-lg mb-2">Zayıflıkları Güçlendirme</h4><p class="text-gray-600">Web sitesi, SEO ve kullanıcı deneyimi odaklı bir yenileme ile dijital vitrin güçlendirilmeli; bu sayede organik trafik çekilerek reklam maliyetlerine olan bağımlılık azaltılmalıdır.</p></div>
+                        <div class="bg-white/60 p-6 rounded-lg shadow-sm"><h4 class="font-bold text-lg mb-2">Güçlü Yönlerle Savunma</h4><p class="text-gray-600">Yoğun rekabete ve trend baskısına karşı, Syla'nın "zamansız zarafet" ve "üstün ipek kalitesi" gibi temel direkleri iletişimde sürekli vurgulanarak sadık bir müşteri kitlesi yaratılmalıdır.</p></div>
+                        <div class="bg-white/60 p-6 rounded-lg shadow-sm"><h4 class="font-bold text-lg mb-2">Tehditleri Azaltma</h4><p class="text-gray-600">Artan reklam maliyetlerine karşı, bütçeyi geniş kitleler yerine, dönüşüm olasılığı en yüksek olan niş hedef kitle segmentlerine odaklayarak yatırım getirisi (ROAS) maksimize edilmelidir.</p></div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="hedef-kitle" class="main-content-section p-6 md:p-10">
+                <div class="max-w-5xl mx-auto">
+                    <h2 class="text-4xl md:text-5xl font-bold text-center mb-4">Syla Kadınını Anlamak: Detaylı Persona Analizi</h2>
+                    <p class="text-lg text-center text-gray-500 mb-12">Pazarlama stratejimizin başarısı, kime konuştuğumuzu bilmemize bağlıdır. Syla kadını, sadece demografik bir grup değil; değerleri, hedefleri ve estetik anlayışıyla yaşayan, nefes alan bir profildir.</p>
+                    <div class="bg-white/50 p-8 rounded-2xl shadow-lg mb-16">
+                        <h3 class="text-3xl font-bold text-center mb-4">Persona Karakteristikleri</h3>
+                        <div class="chart-container"><canvas id="targetAudienceChart"></canvas></div>
+                    </div>
+                    <div class="space-y-12">
+                        <div class="bg-white/50 p-8 rounded-2xl shadow-lg grid grid-cols-1 md:grid-cols-3 gap-8 items-center"><div class="md:col-span-1"><img src="https://placehold.co/600x800/EFEAE6/3D3D3D?text=Elif" alt="[Kariyer odaklı vizyoner Elif'in bir resmi]" class="rounded-lg object-cover w-full h-full shadow-md"></div><div class="md:col-span-2"><h3 class="text-3xl font-semibold mb-1">Elif Yılmaz (35) - "Kariyer Odaklı Vizyoner"</h3><p class="text-gray-600 mb-6">Uluslararası bir teknoloji firmasında Direktör. Başarıyı, kaliteyi ve zamanın değerini biliyor. Gardırobu, işlevsel olduğu kadar estetik ve zamansız parçalardan oluşan bir yatırımdır.</p><div class="space-y-4"><h4 class="font-bold text-lg">Onun İçin Syla Ne İfade Ediyor?</h4><p class="text-gray-600">"Syla, yoğun bir günün ardından katıldığı bir davette veya önemli bir toplantıda, kendini zahmetsizce şık, güçlü ve özgüvenli hissetmesini sağlayan zırhıdır. Bir Syla elbisesi, onun için 'doğru kararı verdim' demenin bir yoludur."</p><h4 class="font-bold text-lg">Ona Nasıl Ulaşırız?</h4><p class="text-gray-600">Vogue Business, Forbes gibi yayınlarda dijital reklamlar; Net-a-Porter, Matchesfashion gibi platformlarda görünürlük; iş ve başarı odaklı podcast sponsorlukları.</p></div></div></div>
+                        <div class="bg-white/50 p-8 rounded-2xl shadow-lg grid grid-cols-1 md:grid-cols-3 gap-8 items-center"><div class="md:col-span-1"><img src="https://placehold.co/600x800/EFEAE6/3D3D3D?text=Zeynep" alt="[Estetik odaklı girişimci Zeynep'in bir resmi]" class="rounded-lg object-cover w-full h-full shadow-md"></div><div class="md:col-span-2"><h3 class="text-3xl font-semibold mb-1">Zeynep Kaya (28) - "Estetik Odaklı Girişimci"</h3><p class="text-gray-600 mb-6">Kendi tasarım stüdyosuna sahip bir iç mimar. Hayatının her alanında anlam, özgünlük ve sürdürülebilirlik arıyor. Lüksü, bir logonun ötesinde, bir hikaye ve zanaatkarlık olarak görüyor.</p><div class="space-y-4"><h4 class="font-bold text-lg">Onun İçin Syla Ne İfade Ediyor?</h4><p class="text-gray-600">"Syla, onun estetik değerlerinin ve etik duruşunun bir yansımasıdır. Bir Syla elbisesi giymek, sadece güzel görünmek değil, aynı zamanda değerleriyle uyumlu bir seçimi üzerinde taşımaktır. Bu, onun için bilinçli bir lükstür."</p><h4 class="font-bold text-lg">Ona Nasıl Ulaşırız?</h4><p class="text-gray-600">Instagram ve Pinterest'te ilham verici görsel içerikler; Kinfolk, Cereal gibi estetik odaklı dergilerle işbirlikleri; sanat galerileri ve tasarım etkinliklerinde sponsorluklar.</p></div></div></div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="pazar-analizi" class="main-content-section p-6 md:p-10">
+                <div class="max-w-6xl mx-auto">
+                    <h2 class="text-4xl md:text-5xl font-bold text-center mb-4">Rekabet Alanı ve Farklılaşma Stratejisi</h2>
+                    <p class="text-lg text-center text-gray-500 mb-12">Lüks moda pazarında Syla Atelier'in özgün yerini tanımlamak ve markayı rakiplerinden ayrıştıracak stratejiler geliştirmek için rekabet haritasını çıkardık.</p>
+                    <div class="bg-white/50 p-8 rounded-2xl shadow-lg mb-16">
+                        <h3 class="text-3xl font-bold text-center mb-4">Pazar Konumlandırma Haritası</h3>
+                        <div class="chart-container h-[400px] md:h-[500px] max-h-[600px]"><canvas id="competitorChart"></canvas></div>
+                    </div>
+                    <div class="bg-white/50 p-8 rounded-2xl shadow-lg">
+                        <h3 class="text-3xl font-bold text-center mb-8">Syla Atelier'in Benzersiz Değer Önerisi</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                            <div><h4 class="text-2xl font-semibold mb-2">Hikayeli Lüks</h4><p class="text-gray-600">Syla, sadece ipek bir elbise değil; Como kıyılarından gelen bir ilhamı, bir kurucunun tutkusunu ve zanaatkarlığı sunar. Bu duygusal bağ, markayı taklit edilemez kılar.</p></div>
+                            <div><h4 class="text-2xl font-semibold mb-2">Kalitede Şeffaflık</h4><p class="text-gray-600">Pek çok markanın "lüks" dediği yerde Syla, kullandığı ipeğin kalitesini, işçiliğin detaylarını anlatarak somut bir değer sunar. Bu, bilinçli tüketici için en önemli ayrıştırıcıdır.</p></div>
+                            <div><h4 class="text-2xl font-semibold mb-2">Ulaşılabilir Zarafet</h4><p class="text-gray-600">Haute couture'ün erişilmezliği ile hızlı modanın sıradanlığı arasında, Syla, gerçek kaliteyi ve özgün tasarımı, yatırım yapılabilir bir lüks segmentinde sunarak kendine özel bir koridor açar.</p></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="dijital-strateji" class="main-content-section p-6 md:p-10">
+                <div class="max-w-5xl mx-auto">
+                    <h2 class="text-4xl md:text-5xl font-bold text-center mb-4">360° Dijital Büyüme Mimarisi</h2>
+                    <p class="text-lg text-center text-gray-500 mb-12">Marka ruhunu dijital kanallara taşıyarak bilinirlik, etkileşim ve satışı artıracak entegre bir eylem planı sunuyoruz.</p>
+                    <div id="tabs-container">
+                        <div class="border-b border-gray-300 mb-8"><nav class="flex justify-center -mb-px space-x-8" aria-label="Tabs"><button class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-lg text-gray-500 border-transparent active" data-target="panel-1">Web Sitesi & SEO</button><button class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-lg text-gray-500 border-transparent" data-target="panel-2">Sosyal Medya</button><button class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-lg text-gray-500 border-transparent" data-target="panel-3">Performans Pazarlaması</button></nav></div>
+                        <div id="panels-container" class="bg-white/50 p-8 rounded-2xl shadow-lg">
+                            <div id="panel-1" class="tab-panel space-y-6"><h3 class="text-3xl font-semibold text-[#8B7D72]">Dijital Vitrin: Kusursuz Bir Web Deneyimi</h3><div><h4 class="text-xl font-bold mb-2">Dönüşüm Odaklı Lüks Tasarım</h4><p class="text-gray-600">Sadece estetik değil, aynı zamanda kullanıcıyı satın almaya teşvik eden bir yolculuk tasarlamak. Ürün sayfaları, yüksek çözünürlüklü görseller, ipeğin dokusunu hissettiren videolar ve marka hikayesini anlatan metinlerle zenginleştirilecek. Mobil deneyim, kusursuz ve hızlı olacak.</p></div><div><h4 class="text-xl font-bold mb-2">"The Journal": SEO ve Marka Otoritesi</h4><p class="text-gray-600">"İpek", "sürdürülebilir lüks", "zamansız stil" gibi konularda otorite olmak için stratejik içerik üretimi. Bu, sadece organik trafik çekmekle kalmayacak, aynı zamanda Syla'yı bir moda markasından bir yaşam tarzı küratörüne dönüştürecektir.</p></div></div>
+                            <div id="panel-2" class="tab-panel hidden space-y-6"><h3 class="text-3xl font-semibold text-[#8B7D72]">Hikaye Anlatımı: Sosyal Medya İçerik Stratejisi</h3><div><h4 class="text-xl font-bold mb-2">Instagram: Zarafetin Görsel Sahnesi</h4><p class="text-gray-600">Feed, markanın görsel manifestosu olacak. Reels, ipeğin akışkanlığını, bir tasarımın eskizden gerçeğe dönüşümünü ve Syla kadınının ilham verici anlarını gösterecek. Etkileşimi artırmak için "Stil Danışmanlığı" gibi canlı yayın serileri düzenlenecek.</p></div><div><h4 class="text-xl font-bold mb-2">TikTok & Pinterest: İlham ve Keşif</h4><p class="text-gray-600">TikTok, daha samimi ve "nasıl yapılır" tarzı içeriklerle (ör: "İpek fularınızı 5 farklı şekilde bağlayın") markayı daha ulaşılabilir kılacak. Pinterest ise stil panoları ve ilham verici görsellerle, satın alma yolculuğunun en başındaki kullanıcıları yakalayacak bir vitrin olacak.</p></div></div>
+                            <div id="panel-3" class="tab-panel hidden space-y-6"><h3 class="text-3xl font-semibold text-[#8B7D72]">Büyüme Motoru: Veriye Dayalı Performans Pazarlaması</h3><div><h4 class="text-xl font-bold mb-2">Akıllı Reklam Hunisi (Meta & Google)</h4><p class="text-gray-600">Geniş kitlelere marka hikayesini anlatan videolardan (Farkındalık), siteyi ziyaret edenlere koleksiyonları hatırlatan reklamlara (Değerlendirme) ve sepetini terk edenlere özel teklifler sunan dinamik reklamlara (Dönüşüm) kadar uzanan bütüncül bir yapı kurulacak. Bütçe, en iyi performansı gösteren kanala dinamik olarak aktarılacak.</p></div><div><h4 class="text-xl font-bold mb-2">Uluslararası Hedefleme</h4><p class="text-gray-600">Reklam kampanyaları, Paris, Londra ve Milano'da yaşayan, lüks markalara ilgi duyan, yüksek gelir grubundaki "expat" ve yerel kitlelere özel olarak hedeflenecek. Dil ve kültürel nüanslara dikkat edilerek hazırlanan reklam kreatifleri kullanılacak.</p></div></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="butce-ve-plan" class="main-content-section p-6 md:p-10">
+                <div class="max-w-5xl mx-auto">
+                    <h2 class="text-4xl md:text-5xl font-bold text-center mb-4">Yatırım ve Eylem Planı</h2>
+                    <p class="text-lg text-center text-gray-500 mb-12">Stratejiyi hayata geçirecek olan kaynakların akıllıca dağılımı ve zaman planlaması, başarının anahtarıdır. İşte 70.000 TL'lik aylık bütçenin dağılımı ve 6 aylık yol haritamız.</p>
+                    <div class="bg-white/50 p-8 rounded-2xl shadow-lg mb-16">
+                        <h3 class="text-3xl font-bold text-center mb-4">Aylık Stratejik Bütçe Dağılımı</h3>
+                        <div class="chart-container"><canvas id="budgetChart"></canvas></div>
+                    </div>
+                    <h3 class="text-4xl font-bold text-center mb-8">6 Aylık Stratejik Yol Haritası</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div class="bg-white/60 p-6 rounded-lg shadow-sm"><h4 class="text-2xl font-semibold mb-3">Faz 1: Temel Atma (1-2. Ay)</h4><p class="text-gray-500 mb-4"><strong>Odak:</strong> Dijital altyapıyı mükemmelleştirmek.</p><ul class="list-disc list-inside text-gray-600 space-y-1 text-sm"><li>Web sitesi optimizasyonu</li><li>SEO temellerinin atılması</li><li>Sosyal medya estetiğinin yenilenmesi</li><li>Marka bilinirliği reklamları</li></ul></div>
+                        <div class="bg-white/60 p-6 rounded-lg shadow-sm"><h4 class="text-2xl font-semibold mb-3">Faz 2: Büyüme (3-4. Ay)</h4><p class="text-gray-500 mb-4"><strong>Odak:</strong> Kitleyi genişletmek ve etkileşim yaratmak.</p><ul class="list-disc list-inside text-gray-600 space-y-1 text-sm"><li>İçerik pazarlaması (Blog)</li><li>İlk influencer işbirliği</li><li>Yeniden pazarlama kampanyaları</li><li>Topluluk yönetimine başlama</li></ul></div>
+                        <div class="bg-white/60 p-6 rounded-lg shadow-sm"><h4 class="text-2xl font-semibold mb-3">Faz 3: Optimizasyon (5-6. Ay)</h4><p class="text-gray-500 mb-4"><strong>Odak:</strong> Dönüşümü artırmak ve sadakat oluşturmak.</p><ul class="list-disc list-inside text-gray-600 space-y-1 text-sm"><li>Dönüşüm odaklı reklamlar (ROAS)</li><li>A/B testleri ile optimizasyon</li><li>E-posta pazarlama otomasyonu</li><li>Müşteri sadakat programı taslağı</li></ul></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const sections = document.querySelectorAll('.main-content-section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href').substring(1) === entry.target.id) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, { rootMargin: '-30% 0px -70% 0px' });
+            sections.forEach(section => { observer.observe(section); });
+
+            const tabs = document.querySelectorAll('.tab-button');
+            const panels = document.querySelectorAll('.tab-panel');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(item => item.classList.remove('active'));
+                    tab.classList.add('active');
+                    const target = document.getElementById(tab.dataset.target);
+                    panels.forEach(panel => panel.classList.add('hidden'));
+                    target.classList.remove('hidden');
+                });
+            });
+
+            const chartDefaults = { plugins: { legend: { labels: { font: { family: "'Poppins', sans-serif" } } }, tooltip: { bodyFont: { family: "'Poppins', sans-serif" }, titleFont: { family: "'Playfair Display', serif" } } }, maintainAspectRatio: false };
+            
+            new Chart(document.getElementById('targetAudienceChart'), { type: 'radar', data: { labels: ['Kalite Odaklılık', 'Moda Bilinci', 'Gelir Seviyesi', 'Dijital Yetkinlik', 'Marka Sadakati'], datasets: [{ label: 'Elif (Vizyoner)', data: [9, 7, 9, 8, 9], fill: true, backgroundColor: 'rgba(139, 125, 114, 0.2)', borderColor: 'rgb(139, 125, 114)', pointBackgroundColor: 'rgb(139, 125, 114)' }, { label: 'Zeynep (Girişimci)', data: [8, 9, 7, 9, 6], fill: true, backgroundColor: 'rgba(195, 177, 160, 0.2)', borderColor: 'rgb(195, 177, 160)', pointBackgroundColor: 'rgb(195, 177, 160)' }] }, options: { ...chartDefaults } });
+            new Chart(document.getElementById('competitorChart'), { type: 'bubble', data: { datasets: [ { label: 'Syla Atelier', data: [{ x: 7, y: 7.5, r: 15 }], backgroundColor: 'rgba(211, 62, 107, 0.8)', borderColor: 'rgba(211, 62, 107, 1)' }, { label: 'Magda Butrym', data: [{ x: 9, y: 8.5, r: 20 }], backgroundColor: 'rgba(139, 125, 114, 0.7)', borderColor: 'rgba(139, 125, 114, 1)' }, { label: 'New Arrivals', data: [{ x: 6, y: 6, r: 18 }], backgroundColor: 'rgba(195, 177, 160, 0.7)', borderColor: 'rgba(195, 177, 160, 1)' }, { label: 'Ceren Ocak', data: [{ x: 6.5, y: 7, r: 15 }], backgroundColor: 'rgba(195, 177, 160, 0.7)', borderColor: 'rgba(195, 177, 160, 1)' }, { label: 'Dior/Chanel', data: [{ x: 10, y: 9.2, r: 28 }], backgroundColor: 'rgba(61, 61, 61, 0.5)', borderColor: 'rgba(61, 61, 61, 1)' } ] }, options: { ...chartDefaults, scales: { y: { title: { display: true, text: 'Tasarım Dili (Minimalist -> Maksimalist)', font: { family: "'Poppins', sans-serif" } } }, x: { title: { display: true, text: 'Fiyat Konumlandırması (Erişilebilir Lüks -> Haute Couture)', font: { family: "'Poppins', sans-serif" } } } } } });
+            new Chart(document.getElementById('budgetChart'), { type: 'doughnut', data: { labels: ['Meta Reklamları', 'Google Reklamları', 'İçerik & Influencer', 'SEO & Web'], datasets: [{ data: [30000, 25000, 10000, 5000], backgroundColor: ['#8B7D72', '#A8998D', '#C3B1A0', '#EFEAE6'], borderColor: '#F8F5F2', hoverOffset: 4 }] }, options: { ...chartDefaults, plugins: { ...chartDefaults.plugins, tooltip: { callbacks: { label: function(context) { let total = context.chart.getDatasetMeta(0).total; let value = context.parsed; let percentage = ((value / total) * 100).toFixed(1) + '%'; return `${context.label}: ${new Intl.NumberFormat('tr-TR', { style: 'currency', currency: 'TRY' }).format(value)} (${percentage})`; } } } } } });
+        });
+    </script>
+</body>
+</html>
